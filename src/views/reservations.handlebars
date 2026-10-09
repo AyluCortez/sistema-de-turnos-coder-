@@ -1,0 +1,17 @@
+<h1>Turnos reservados</h1>
+<p class="lede">
+  Hacé clic en el nombre del paciente para ver el detalle del turno y las prestaciones reservadas.
+</p>
+
+{{#if reservations.length}}
+  <ul class="list">
+    {{#each reservations}}
+      <li>
+        <a href="/reservations/{{id}}">{{clientName}}</a>
+        <span>{{formatDate date}} · {{services.length}} prestación(es)</span>
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p>No hay turnos reservados. Corré <code>npm run seed</code>.</p>
+{{/if}}

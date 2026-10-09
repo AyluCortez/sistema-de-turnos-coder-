@@ -1,0 +1,93 @@
+<h1>Especialidades y servicios</h1>
+<p class="lede">
+  Próximamente vamos a incorporar nuevas especialidades con la apertura de dos nuevas sucursales.
+</p>
+
+<form class="filters" method="get" action="/services">
+  <label>
+    Buscar
+    <input name="title" value="{{filters.title}}" placeholder="Ej: consulta" />
+  </label>
+  <label>
+    Especialidad
+    <select name="specialty">
+      <option value="" {{#if (eq filters.specialty "")}}selected{{/if}}>Todas</option>
+      {{#each specialties}}
+        <option value="{{value}}" {{#if (eq ../filters.specialty value)}}selected{{/if}}>{{label}}</option>
+      {{/each}}
+    </select>
+  </label>
+  <label>
+    Disponibilidad
+    <select name="status">
+      <option value="" {{#if (eq filters.status "")}}selected{{/if}}>Todas</option>
+      <option value="true" {{#if (eq filters.status "true")}}selected{{/if}}>Disponible</option>
+      <option value="false" {{#if (eq filters.status "false")}}selected{{/if}}>No disponible</option>
+    </select>
+  </label>
+  <label>
+    Ordenar por
+    <select name="sortBy">
+      <option value="price" {{#if (eq filters.sortBy "price")}}selected{{/if}}>precio</option>
+      <option value="title" {{#if (eq filters.sortBy "title")}}selected{{/if}}>nombre</option>
+    </select>
+  </label>
+  <label>
+    Dirección
+    <select name="order">
+      <option value="asc" {{#if (eq filters.order "asc")}}selected{{/if}}>asc</option>
+      <option value="desc" {{#if (eq filters.order "desc")}}selected{{/if}}>desc</option>
+    </select>
+  </label>
+  <label>
+    Por página
+    <select name="limit">
+      <option value="5" {{#if (eq filters.limit 5)}}selected{{/if}}>5</option>
+      <option value="10" {{#if (eq filters.limit 10)}}selected{{/if}}>10</option>
+    </select>
+  </label>
+  <button type="submit">Aplicar</button>
+</form>
+
+{{#if queryError}}
+  <p class="error">{{queryError}}</p>
+{{/if}}
+
+{{#if services.length}}
+  <p class="meta">{{totalDocs}} resultado{{#unless (eq totalDocs 1)}}s{{/unless}} · página {{page}} de {{totalPages}}</p>
+  <div class="grid">
+    {{#each services}}
+      <article class="card">
+        <p class="meta">{{specialtyLabel specialty}}</p>
+        <h2><a href="/services/{{id}}">{{title}}</a></h2>
+        <p>{{description}}</p>
+        <p class="price">${{price}}</p>
+        {{#if status}}
+          <span class="badge ok">Disponible</span>
+          <div class="actions">
+            <a class="btn" href="/reservations/new?service={{id}}">Reservar turno</a>
+          </div>
+        {{else}}
+          <span class="badge no">No disponible</span>
+        {{/if}}
+      </article>
+    {{/each}}
+  </div>
+  {{#if totalPages}}
+    <nav class="pager">
+      {{#if hasPrevPage}}
+        <a class="btn ghost" href="{{prevLink}}">Anterior</a>
+      {{/if}}
+      {{#if hasNextPage}}
+        <a class="btn ghost" href="{{nextLink}}">Siguiente</a>
+      {{/if}}
+    </nav>
+  {{/if}}
+{{else}}
+  {{#if queryError}}
+  {{else if filtersActive}}
+    <p>No hay prestaciones con ese filtro.</p>
+  {{else}}
+    <p>No hay prestaciones todavía. Corré <code>npm run seed</code>.</p>
+  {{/if}}
+{{/if}}

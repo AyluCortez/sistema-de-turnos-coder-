@@ -1,0 +1,49 @@
+<section class="hero">
+  <h1>Tablero en vivo</h1>
+  <p class="lede">Cargá una nueva prestación y se suma al listado al instante.</p>
+</section>
+
+<form id="service-form" class="form">
+  <label>
+    Prestación
+    <input name="title" required placeholder="Consulta nutricional" />
+  </label>
+  <label>
+    Descripción
+    <input name="description" placeholder="Plan alimentario personalizado" />
+  </label>
+  <label>
+    Especialidad
+    <select name="specialty" required>
+      {{#each specialties}}
+        <option value="{{value}}">{{label}}</option>
+      {{/each}}
+    </select>
+  </label>
+  <label>
+    Precio
+    <input name="price" type="number" min="0" required value="20000" />
+  </label>
+  <button type="submit">Agregar por socket</button>
+</form>
+
+<p id="form-error" class="error" hidden></p>
+
+<ul id="services-list" class="grid">
+  {{#each services}}
+    <li class="card" data-id="{{id}}">
+      <p class="meta">{{specialtyLabel specialty}}</p>
+      <h2>{{title}}</h2>
+      <p>{{description}}</p>
+      <p class="price">${{price}}</p>
+      {{#if status}}
+        <span class="badge ok">Disponible</span>
+      {{else}}
+        <span class="badge no">No disponible</span>
+      {{/if}}
+    </li>
+  {{/each}}
+</ul>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/realtime.js"></script>

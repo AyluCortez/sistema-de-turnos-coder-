@@ -1,0 +1,34 @@
+<p class="kicker"><a href="/services">← Especialidades y servicios</a></p>
+<h1>Reservar turno</h1>
+<p class="lede">Completá los datos del paciente para reservar la prestación</p>
+<form id="reservation-form" class="form">
+  <input type="hidden" name="serviceId" value="{{service.id}}" />
+  <div class="reservation-service">
+    <p class="meta">{{specialtyLabel service.specialty}}</p>
+    <h2>{{service.title}}</h2>
+    <p>{{service.description}}</p>
+    <p class="price">${{service.price}}</p>
+  </div>
+
+  <label>
+    Nombre del paciente
+    <input type="text" name="clientName" required placeholder="Ej: Camila Arena" />
+  </label>
+  <label>
+    Fecha
+    <input type="date" name="date" required />
+  </label>
+  <label>
+    Hora
+    <input type="time" name="time" required />
+  </label>
+  <label>
+    Cantidad de sesiones
+    <input type="number" name="quantity" min="1" value="1" required />
+  </label>
+
+  <button type="submit">Confirmar turno</button>
+</form>
+<p id="reservation-message" class="error" hidden></p>
+
+<script src="/js/reservation.js"></script>

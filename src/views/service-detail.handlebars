@@ -1,0 +1,22 @@
+<p class="kicker"><a href="/services">← Especialidades y servicios</a></p>
+<h1>{{service.title}}</h1>
+
+<ul class="facts">
+  <li>Especialidad: {{specialtyLabel service.specialty}}</li>
+  <li>Descripción: {{service.description}}</li>
+  <li>Precio: ${{service.price}}</li>
+  <li>
+    Estado:
+    {{#if service.status}}
+      <span class="badge ok">Disponible</span>
+    {{else}}
+      <span class="badge no">No disponible</span>
+    {{/if}}
+  </li>
+</ul>
+
+{{#if service.status}}
+  <div class="actions">
+    <a class="btn" href="/reservations/new?service={{service.id}}">Reservar turno</a>
+  </div>
+{{/if}}

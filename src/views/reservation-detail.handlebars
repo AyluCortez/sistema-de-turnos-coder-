@@ -1,0 +1,25 @@
+<p class="kicker"><a href="/reservations">← Turnos</a></p>
+<h1>Turno de {{reservation.clientName}}</h1>
+
+<ul class="facts">
+  <li>Fecha: {{formatDate reservation.date}}</li>
+</ul>
+
+<h2>Prestaciones</h2>
+{{#if reservation.services.length}}
+  <ul class="list">
+    {{#each reservation.services}}
+      <li>
+        {{#if (isPopulatedService serviceId)}}
+          {{serviceId.title}}
+          <span>{{specialtyLabel serviceId.specialty}} · ${{serviceId.price}} · x{{quantity}}</span>
+        {{else}}
+          Servicio {{serviceId}}
+          <span>cantidad {{quantity}}</span>
+        {{/if}}
+      </li>
+    {{/each}}
+  </ul>
+{{else}}
+  <p>Este turno todavía no tiene prestaciones.</p>
+{{/if}}
